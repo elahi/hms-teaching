@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>HM1</name>
+    <Style id="icon-1899-FF5252-normal">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-FF5252-highlight">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-FF5252">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-FF5252-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-FF5252-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-000000-1200-77-normal">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d000000</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-000000-1200-77-highlight">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d000000</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-000000-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-000000-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-000000-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>HM1</name>
+      <description><![CDATA[description: <br>latitude: <br>longitude: ]]></description>
+      <styleUrl>#poly-000000-1200-77</styleUrl>
+      <ExtendedData>
+        <Data name="description">
+          <value/>
+        </Data>
+        <Data name="latitude">
+          <value/>
+        </Data>
+        <Data name="longitude">
+          <value/>
+        </Data>
+      </ExtendedData>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              -121.9040991,36.6213782,0
+              -121.9038544,36.6211587,0
+              -121.9036355,36.6213241,0
+              -121.9038764,36.6215344,0
+              -121.9040991,36.6213782,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>Corner-South</name>
+      <description><![CDATA[description: <br>latitude: 36.6211633<br>longitude: -121.9038638]]></description>
+      <styleUrl>#icon-1899-FF5252</styleUrl>
+      <ExtendedData>
+        <Data name="description">
+          <value/>
+        </Data>
+        <Data name="latitude">
+          <value>36.6211633</value>
+        </Data>
+        <Data name="longitude">
+          <value>-121.9038638</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          -121.9038551,36.621159,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Corner-East</name>
+      <description><![CDATA[description: <br>latitude: 36.6213241<br>longitude: -121.9036362]]></description>
+      <styleUrl>#icon-1899-FF5252</styleUrl>
+      <ExtendedData>
+        <Data name="description">
+          <value/>
+        </Data>
+        <Data name="latitude">
+          <value>36.6213241</value>
+        </Data>
+        <Data name="longitude">
+          <value>-121.9036362</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          -121.9036362,36.6213241,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Corner-West</name>
+      <description><![CDATA[description: <br>latitude: 36.6213796<br>longitude: -121.9041065]]></description>
+      <styleUrl>#icon-1899-FF5252</styleUrl>
+      <ExtendedData>
+        <Data name="description">
+          <value/>
+        </Data>
+        <Data name="latitude">
+          <value>36.6213796</value>
+        </Data>
+        <Data name="longitude">
+          <value>-121.9041065</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          -121.9040985,36.621378,0
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
