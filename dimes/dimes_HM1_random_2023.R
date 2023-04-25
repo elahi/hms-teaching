@@ -53,15 +53,18 @@ plot(st_geometry(kml1))
 plot(my_points, add = TRUE, pch = 3, col = "red")
 
 # Create dataframe and export
+# Note: column names are for use with gpx output as described here:
+# https://www.gpsvisualizer.com/convert_input
 head(my_points)
 str(my_points)
 points_df <- do.call(rbind, st_geometry(my_points)) %>% 
   as_tibble() %>% 
   setNames(c("lon", "lat")) %>% 
-  mutate(quadrat = 1:n())
+  mutate(name = 1:n(), 
+         desc = "Random")
 
 # Reorder columns
 points_df <- points_df %>% 
-  select(quadrat, lat, lon) 
+  select(name, desc, lat, lon) 
 points_df
 write.csv(points_df, here(folder, "data_output", "hm1_10random_2023.csv"))
