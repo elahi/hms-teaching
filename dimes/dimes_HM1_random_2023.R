@@ -56,9 +56,12 @@ plot(my_points, add = TRUE, pch = 3, col = "red")
 head(my_points)
 str(my_points)
 points_df <- do.call(rbind, st_geometry(my_points)) %>% 
-  as_tibble() %>% setNames(c("lon", "lat"))
+  as_tibble() %>% 
+  setNames(c("lon", "lat")) %>% 
+  mutate(quadrat = 1:n())
 
-# Make lat in first column
-points_df <- points_df %>% select(lat, lon)
+# Reorder columns
+points_df <- points_df %>% 
+  select(quadrat, lat, lon) 
 points_df
 write.csv(points_df, here(folder, "data_output", "hm1_10random_2023.csv"))
