@@ -20,8 +20,15 @@ theme_set(theme_bw())
 
 #### Data ####
 d <- read_csv(here(folder, "data","hms_zonation_data_230422.csv")) %>% 
+  select(-DISTANCE, -HEIGHT) %>% 
+  rename(DISTANCE = DISTANCE2) %>% 
+  rename(HEIGHT = HEIGHT2) %>% 
   mutate(year = as.character(YEAR))
 names(d)
+
+# Remove data w/o tidal heights
+# These two quadrats had no data for sessile or mobile taxa
+d <- d %>% filter(!is.na(HEIGHT))
 
 #### Elevation change ####
 
@@ -31,79 +38,58 @@ d %>%
   geom_line() +
   facet_wrap(~ year)
 
+d %>% 
+  ggplot(aes(DISTANCE, HEIGHT, color = year)) + 
+  geom_point() + 
+  geom_line() +
+  facet_wrap(~ SITE)
+
+# 2013 is really bad, remove it
+d <- d %>% 
+  filter(year != "2013")
+
+# Plot Height v Distance
+d %>% 
+  ggplot(aes(DISTANCE, HEIGHT, color = year)) + 
+  geom_line(alpha = 0.7) +
+  facet_wrap(~ SITE) + 
+  labs(x = "Distance along transect (m)", y = "Elevation (m above MLLW)")
+
+ggsave(file = here(folder, "figs", paste(file_name, "-plot_height_distance.png", sep = "")), 
+       height = 3, width = 5)
+
 # Summarise start and end distance along transect by year, site
 transect_df <- d %>% 
-  group_by(year, )
+  group_by(year, SITE) %>% 
+  summarize(min_height = min(HEIGHT), 
+            max_height = max(HEIGHT), 
+            min_distance = min(DISTANCE), 
+            max_distance = max(DISTANCE))
 
+transect_df
+
+transect_df %>% 
+  ggplot(aes(SITE, min_height, color = year)) +
+  geom_point()
+
+transect_df %>% 
+  ggplot(aes(SITE, max_height, color = year)) +
+  geom_point()
 
 d %>% 
-  ggplot(aes(HEIGHT, SUM_SESSILE, color = year)) + 
+  ggplot(aes(HEIGHT, SUM_SESSILE, color = SITE)) + 
   geom_point() + 
   geom_line() +
   facet_wrap(~ year)
 
-
 d %>% 
-  ggplot(aes(HEIGHT, SUM_MOBILE, color = year)) + 
+  ggplot(aes(HEIGHT, ENDOCLADIA, color = SITE)) + 
   geom_point() + 
   geom_line() +
   facet_wrap(~ year)
 
-
-#### Summarise tidal heights and plot ####
-
-# Boxplot
 d %>% 
-  ggplot(aes(transect_ht, quad_est_m, color = year)) +
-  geom_boxplot() +
-  labs(x = "Transect", y = "Elevation (m above MLLW)")
-
-# Summarize tidal heights
-elev_df <- d %>% 
-  group_by(year, transect_ht) %>% 
-  summarise(mean = mean(quad_est_m), 
-            sd = sd(quad_est_m), 
-            n = n(), 
-            se = sd / sqrt(n), 
-            CI = 1.96*se)
-elev_df
-
-# Plot mean and interval
-elev_df %>% 
-  ggplot(aes(transect_ht, mean, color = year)) + 
+  ggplot(aes(HEIGHT, SUM_MOBILE, color = SITE)) + 
   geom_point() + 
-  geom_errorbar(aes(ymin = mean - CI, ymax = mean + CI), width = 0.1) +
-  labs(x = "DIMES transect at HMS", y = "Elevation (m above MLLW)", caption = "mean and 95%CI")
-
-ggsave(file = here(folder, "figs", paste(file_name, "-plot_mean_elev.png", sep = "")), 
-       height = 3, width = 4)
-
-#### Summarise tidal heights and plot ####
-
-# Boxplot
-d %>% 
-  ggplot(aes(transect_ht, Shell/16*100, color = year)) +
-  geom_boxplot() +
-  labs(x = "Transect", y = "Percent cover")
-
-# Summarize 
-shell_df <- d %>% 
-  group_by(year, transect_ht) %>% 
-  summarise(mean = mean(Shell/16*100, na.rm = TRUE), 
-            sd = sd(Shell/16*100, na.rm = TRUE), 
-            n = n(), 
-            se = sd / sqrt(n), 
-            CI = 1.96*se)
-shell_df
-
-# Plot mean and interval
-shell_df %>% 
-  ggplot(aes(transect_ht, mean, color = year)) + 
-  geom_point() + 
-  geom_errorbar(aes(ymin = mean - CI, ymax = mean + CI), width = 0.1) +
-  labs(x = "DIMES transect at HMS", y = "Shell cover (%)", caption = "mean and 95%CI")
-
-ggsave(file = here(folder, "figs", paste(file_name, "-plot_mean_shell.png", sep = "")), 
-       height = 3, width = 4)
-
-
+  geom_line() +
+  facet_wrap(~ year)
