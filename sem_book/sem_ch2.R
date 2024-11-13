@@ -10,6 +10,43 @@
 library(here)
 library(lavaan)
 library(piecewiseSEM)
+library(tidyverse)
+
+#### RULES ####
+
+set.seed(111)
+data <- data.frame(y1 = runif(100))
+data$x1 <- data$y1 + runif(100)
+unstd.model <- lm(y1 ~ x1, data)
+
+data
+data$y2 <- data$y1 + runif(100)
+d <- as_tibble(data)
+d
+
+pairs(d)
+
+residsx1 <- residuals(lm(x1 ~ y1, as.data.frame(apply(data, 2, scale))))
+residsx1
+plot(residsx1 ~ d$x1)
+
+m2 <- lm(scale(data$y2) ~ residsx1)
+summary(m2)
+plot(m2)
+m2$coefficients
+summary(lm(scale(data$y2) ~ residsx1))$coefficients[2, 1]
+
+
+# get unstandardized coefficient
+summary(unstd.model)$coefficients[2, 1]
+
+# Multiplying partial of x1 on y2 by y1 on y2
+-0.01754746 * 0.6703465
+
+# Subtracting standardized coef of x1-->y2 vs pathx1_y1 * pathy1_y2
+0.4579473 - 0.4484743 # not the same
+
+#### SEM ####
 
 data(keeley)
 head(keeley)
@@ -73,3 +110,12 @@ keeley_sem3 <- sem(keeley_formula3, data = keeley)
 summary(keeley_sem3, standardize = T)
 
 anova(keeley_sem2, keeley_sem3)
+
+#### ####
+
+x <- c(1, 2, 3, 4)
+y <- c(2, 3, 4, 5)
+y2 <- -(y)
+
+cov(x, y)
+cov(x, y2)
